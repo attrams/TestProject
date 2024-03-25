@@ -16,5 +16,4 @@ if (found)
 {
     Console.WriteLine("Set contains 42");
 }
-
 Console.WriteLine($"Total: {total}");
