@@ -1,20 +1,29 @@
-﻿string? readResult;
-bool validEntry = false;
+﻿string? userInput;
+int parseInput = 0;
+
+bool validInput = false;
+
+Console.WriteLine("Enter an integer value between 5 and 10");
 
 do
 {
-    Console.WriteLine("Enter a string containing at least three characters:");
-    readResult = Console.ReadLine();
+    userInput = Console.ReadLine();
+    validInput = int.TryParse(userInput, out parseInput);
 
-    if (readResult != null)
+    if (validInput)
     {
-        if (readResult.Length >= 3)
+        if ((parseInput > 5) && (parseInput < 10))
         {
-            validEntry = true;
+            Console.WriteLine($"Your input value ({parseInput}) has been accepted.");
         }
         else
         {
-            Console.WriteLine("Your input is invalid, please try again.");
+            Console.WriteLine($"You entered {parseInput}. Please enter a number between 5 and 10.");
+            validInput = false;
         }
     }
-} while (validEntry == false);
+    else
+    {
+        Console.WriteLine("Sorry, you entered an invalid number, please try again");
+    }
+} while (validInput == false);
