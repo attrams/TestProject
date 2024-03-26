@@ -1,37 +1,20 @@
-﻿Random random = new Random();
-int heroAttackPoint = 0;
-int monsterAttackPoint = 0;
-
-int heroHealthPoints = 10;
-int monsterHealthPoints = 10;
+﻿string? readResult;
+bool validEntry = false;
 
 do
 {
-    heroAttackPoint = random.Next(1, 11);
-    monsterAttackPoint = random.Next(1, 11);
+    Console.WriteLine("Enter a string containing at least three characters:");
+    readResult = Console.ReadLine();
 
-    monsterHealthPoints -= heroAttackPoint;
-    if (monsterHealthPoints < 1)
+    if (readResult != null)
     {
-        Console.WriteLine($"Monster was damaged and lost {heroAttackPoint} health and now has {monsterHealthPoints} health.");
-        Console.WriteLine("Hero wins");
-        break;
+        if (readResult.Length >= 3)
+        {
+            validEntry = true;
+        }
+        else
+        {
+            Console.WriteLine("Your input is invalid, please try again.");
+        }
     }
-    else
-    {
-        Console.WriteLine($"Monster was damaged and lost {heroAttackPoint} health and now has {monsterHealthPoints} health.");
-    }
-
-    heroHealthPoints -= monsterAttackPoint;
-    if (heroHealthPoints < 1)
-    {
-        Console.WriteLine($"Hero was damaged and lost {monsterAttackPoint} health and now has {heroHealthPoints} health.");
-        Console.WriteLine("Monster wins");
-        break;
-    }
-    else
-    {
-        Console.WriteLine($"Hero was damaged and lost {monsterAttackPoint} health and now has {heroHealthPoints} health.");
-    }
-
-} while ((heroHealthPoints > 1) || (monsterHealthPoints > 1));
+} while (validEntry == false);
