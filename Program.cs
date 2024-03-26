@@ -1,29 +1,23 @@
 ﻿string? userInput;
-int parseInput = 0;
-
 bool validInput = false;
 
-Console.WriteLine("Enter an integer value between 5 and 10");
+Console.WriteLine("Enter your role name (Administrator, Manager, or User)");
 
 do
 {
-    userInput = Console.ReadLine();
-    validInput = int.TryParse(userInput, out parseInput);
+    userInput = Console.ReadLine().Trim().ToLower();
 
-    if (validInput)
+    switch (userInput)
     {
-        if ((parseInput > 5) && (parseInput < 10))
-        {
-            Console.WriteLine($"Your input value ({parseInput}) has been accepted.");
-        }
-        else
-        {
-            Console.WriteLine($"You entered {parseInput}. Please enter a number between 5 and 10.");
-            validInput = false;
-        }
-    }
-    else
-    {
-        Console.WriteLine("Sorry, you entered an invalid number, please try again");
+        case "administrator":
+        case "manager":
+        case "user":
+            validInput = true;
+            break;
+        default:
+            Console.WriteLine($"The role name that you entered, \"{userInput}\" is not valid. Enter your role name (Administrator, Manager, or User)\t");
+            break;
     }
 } while (validInput == false);
+
+Console.WriteLine($"Your input value ({userInput}) has been accepted.");
