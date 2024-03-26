@@ -1,23 +1,22 @@
-﻿string? userInput;
-bool validInput = false;
+﻿string[] myStrings = ["I like pizza. I like roast chicken. I like salad", "I like all three of the menu choices."];
 
-Console.WriteLine("Enter your role name (Administrator, Manager, or User)");
-
-do
+foreach (string myString in myStrings)
 {
-    userInput = Console.ReadLine().Trim().ToLower();
+    int periodLocation = myString.IndexOf(".");
+    string newString = myString;
+    string outputString;
 
-    switch (userInput)
+    while (periodLocation != -1)
     {
-        case "administrator":
-        case "manager":
-        case "user":
-            validInput = true;
-            break;
-        default:
-            Console.WriteLine($"The role name that you entered, \"{userInput}\" is not valid. Enter your role name (Administrator, Manager, or User)\t");
-            break;
+        outputString = newString.Remove(periodLocation);
+        newString = newString.Substring(periodLocation + 1).TrimStart();
+        periodLocation = newString.IndexOf(".");
+        Console.WriteLine(outputString);
     }
-} while (validInput == false);
 
-Console.WriteLine($"Your input value ({userInput}) has been accepted.");
+    if (newString.Length > 0)
+    {
+        Console.WriteLine(newString.Trim());
+    }
+}
+// Console.WriteLine(myStrings[0].Substring(myStrings[0].IndexOf(".") + 1));
