@@ -1,97 +1,105 @@
-﻿// int myInt = 3;
-// Console.WriteLine($"int: {myInt}");
+﻿// /* sort array */
+// string[] pallets = { "B14", "A11", "B12", "A13" };
 
-// decimal myDecimal = myInt;
-// Console.WriteLine($"decimal: {myDecimal}");
+// Console.WriteLine("Sorted");
+// Array.Sort(pallets);
 
-// decimal myDecimal = 3.14m;
-// Console.WriteLine($"decimal: {myDecimal}");
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
 
-// int myInt = (int)myDecimal;
-// Console.WriteLine($"int: {myInt}");
+// /* reverse an array */
+// Console.WriteLine("");
+// Console.WriteLine("Reversed...");
+// Array.Reverse(pallets);
 
-/* type casting */
-// decimal myDecimal = 1.23456789m;
-// float myFloat = (float)myDecimal;
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
 
-// Console.WriteLine($"Decimal: {myDecimal}");
-// Console.WriteLine($"Float: {myFloat}");
+/* Explore Clear() and Resize() */
+// string[] pallets = { "B14", "A11", "B12", "A13" };
+// Console.WriteLine("");
 
-/* Converting string to an int using parse() */
+// Array.Clear(pallets, 0, 2);
+// Console.WriteLine($"Clearing 2 ... count: {pallets.Length}");
 
-// string first = "5";
-// string second = "7";
-// int sum = int.Parse(first) + int.Parse(second);
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
 
-// Console.WriteLine(sum);
+// Console.WriteLine("");
+// Array.Resize(ref pallets, 6);
+// Console.WriteLine($"Resizing 6 ... count: {pallets.Length}");
 
-/* Converting string to an int using Convert class */
-// string value1 = "5";
-// string value2 = "7";
-// int result = Convert.ToInt32(value1) * Convert.ToInt32(value2);
+// pallets[4] = "C01";
+// pallets[5] = "C02";
 
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
+
+// Console.WriteLine("");
+// Array.Resize(ref pallets, 3);
+// Console.WriteLine($"Resizing 3 ... count: {pallets.Length}");
+
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
+
+/* using the ToCharArray() to reverse a string */
+// string value = "abc123";
+// char[] valueArray = value.ToCharArray();
+
+// Array.Reverse(valueArray);
+
+// // string result = new string(valueArray);
+// string result = String.Join(",", valueArray);
 // Console.WriteLine(result);
 
-/* Compare casting and converting a decimal into an int */
-// int value = (int)1.5m;
-// Console.WriteLine(value);
+// string[] items = result.Split(",");
 
-// int value2 = Convert.ToInt32(1.5m);
-// Console.WriteLine(value2);
-
-/* Examining the TryParse() method */
-// string value = "bad";
-// int result = 0;
-
-// if (int.TryParse(value, out result))
+// foreach (string item in items)
 // {
-//     Console.WriteLine($"Measurement: {result}");
-// }
-// else
-// {
-//     Console.WriteLine("Unable to report the measurement.");
+//     Console.WriteLine(item);
 // }
 
-// if (result > 0)
+/* reverse words in a sentence */
+
+// string pangram = "The quick brown fox jumps over the lazy dog";
+// string[] words = pangram.Split(" ");
+
+// for (int i = 0; i < words.Length; i++)
 // {
-//     Console.WriteLine($"Measurement (w/ offset): {50 + result}");
+//     char[] letters = words[i].ToCharArray();
+//     Array.Reverse(letters);
+
+//     words[i] = string.Join("", letters);
 // }
 
-/* Exercise - combine string array values as strings and as integers */
-// string[] values = { "12.3", "45", "ABC", "11", "DEF" };
-// string stringsInValues = "";
-// decimal numbersInValues = 0m;
+// pangram = string.Join(" ", words);
 
-// foreach (string value in values)
-// {
-//     decimal temp = 0;
-//     if (decimal.TryParse(value, out temp))
-//     {
-//         numbersInValues += temp;
-//     }
-//     else
-//     {
-//         stringsInValues += value;
-//     }
-// }
+// Console.WriteLine(pangram);
 
-// Console.WriteLine($"Message: {stringsInValues}");
-// Console.WriteLine($"Total: {numbersInValues}");
+/* parse a string of orders, sort the orders and tag possible erros */
+string orderStream = "B123,C234,A345,C15,B177,G3003,C235,B179";
 
-/* Exercise - output math operations as specific number types */
-int value1 = 12;
-decimal value2 = 6.2m;
-float value3 = 4.3f;
+string[] orderIDs = orderStream.Split(",");
+Array.Sort(orderIDs);
 
-// Your code here to set result1
-// Hint: You need to round the result to nearest integer (don't just truncate)
-int result1 = value1 / Convert.ToInt32(value2);
-Console.WriteLine($"Divide value1 by value2, display the result as an int: {result1}");
-
-// Your code here to set result2
-decimal result2 = value2 / Convert.ToDecimal(value3);
-Console.WriteLine($"Divide value2 by value3, display the result as a decimal: {result2}");
-
-// Your code here to set result3
-float result3 = value3 / (float)value1;
-Console.WriteLine($"Divide value3 by value1, display the result as a float: {result3}");
+foreach (string orderID in orderIDs)
+{
+    if (orderID.Length == 4)
+    {
+        Console.WriteLine($"{orderID}");
+    }
+    else
+    {
+        Console.WriteLine($"{orderID}\t- Error");
+    }
+}
