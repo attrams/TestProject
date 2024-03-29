@@ -1,79 +1,32 @@
-﻿/* Exercise - Use the string's IndexOfAny() and LastIndexOf() helper methods */
-// string message = "(What if) I am (only interested) in the last (set of parentheses)?";
-// int openingPosition = message.LastIndexOf('(');
+﻿/* Use the Remove() method */
+// string data = "12345John Smith          5000  3  ";
+// string updatedData = data.Remove(5, 20);
+// Console.WriteLine(updatedData);
 
-// openingPosition += 1;
-// int closingPositon = message.LastIndexOf(')');
-// int length = closingPositon - openingPosition;
+/* Use the Replace() method */
+// string message = "This--is--ex-amp-le--da-ta";
+// message = message.Replace("--", " ");
+// message = message.Replace("-", "");
 
-// Console.WriteLine(message.Substring(openingPosition, length));
+// Console.WriteLine(message);
 
-// string message = "(What if) there are (more than) one (set of parentheses)?";
+/* Complete a challenge to extract, replace, and remove data from an input string */
+const string input = "<div><h2>Widgets &trade;</h2><span>5000</span></div>";
 
-// while (true)
-// {
-//     int openingPosition = message.IndexOf('(');
+string quantity = "";
+string output = "";
 
-//     if (openingPosition == -1)
-//     {
-//         break;
-//     }
+// Your work here
+int openingPosition = input.IndexOf("<span>");
+openingPosition += 6;
+int closingPostion = input.IndexOf("</span>");
+int length = closingPostion - openingPosition;
+quantity = $"Quantity: {input.Substring(openingPosition, length)}";
+Console.WriteLine(quantity);
 
-//     openingPosition += 1;
-//     int closingPositon = message.IndexOf(')');
-//     int length = closingPositon - openingPosition;
-//     Console.WriteLine(message.Substring(openingPosition, length));
-
-//     message = message.Substring(closingPositon + 1);
-// }
-
-// working with different types of symbol sets
-// string message = "Help (find) the {opening symbols}";
-// Console.WriteLine($"Searching THIS Message: {message}");
-
-// char[] openSymbols = { '[', '{', '(' };
-
-// int startPosition = 5;
-// int openingPosition = message.IndexOfAny(openSymbols);
-// Console.WriteLine($"Found WITHOUT using startPosition: {message.Substring(openingPosition)}");
-
-// openingPosition = message.IndexOfAny(openSymbols, startPosition);
-// Console.WriteLine($"Found WITH using startPosition {startPosition}: {message.Substring(openingPosition)}");
-
-string message = "(What if) I have [different symbols] but every {open symbol} needs a [matching closing symbol]?";
-char[] openSymbols = { '[', '{', '(' };
-
-int closingPosition = 0;
-
-while (true)
-{
-    int openingPosition = message.IndexOfAny(openSymbols, closingPosition);
-
-    if (openingPosition == -1)
-    {
-        break;
-    }
-
-    string currentSymbol = message.Substring(openingPosition, 1);
-
-    char matchingSymbol = ' ';
-
-    switch (currentSymbol)
-    {
-        case "[":
-            matchingSymbol = ']';
-            break;
-        case "{":
-            matchingSymbol = '}';
-            break;
-        case "(":
-            matchingSymbol = ')';
-            break;
-    }
-
-    openingPosition += 1;
-    closingPosition = message.IndexOf(matchingSymbol, openingPosition);
-
-    int length = closingPosition - openingPosition;
-    Console.WriteLine(message.Substring(openingPosition, length));
-}
+openingPosition = input.IndexOf("<div>");
+openingPosition += 5;
+closingPostion = input.IndexOf("</div>");
+length = closingPostion - openingPosition;
+output = $"Ouput: {input.Substring(openingPosition, length).Replace("&trade;", "&reg;")}";
+Console.WriteLine(output);
