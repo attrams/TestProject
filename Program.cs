@@ -1,69 +1,245 @@
-﻿/*
-if ipAddress consists of 4 numbers
-and
-if each ipAddress number has no leading zeroes
-and
-if each ipAddress number is in range 0 - 255
+﻿/* double total = 0;
+double minimumSpend = 30.00;
 
-then ipAddress is valid
+double[] items = { 15.97, 3.50, 12.25, 22.99, 10.98 };
+double[] discounts = { 0.30, 0.00, 0.10, 0.20, 0.50 };
 
-else ipAddress is invalid
-*/
-string[] ipv4Input = { "107.31.1.5", "255.0.0.255", "555..0.555", "255...255" };
-string[] address;
-bool validLength = false;
-bool validRange = false;
-bool validZeroes = false;
-
-foreach (string ip in ipv4Input)
+for (int i = 0; i < items.Length; i++)
 {
-    address = ip.Split(".", StringSplitOptions.RemoveEmptyEntries);
-
-    ValidateLength();
-    ValidateZeroes();
-    ValidateRange();
-
-    if (validLength && validRange && validZeroes)
-    {
-        Console.WriteLine($"{ip} is a valid IPv4 address");
-    }
-    else
-    {
-        Console.WriteLine($"{ip} is an invalid IPv4 address");
-    }
+    total += GetDiscountedPrice(i);
 }
 
-void ValidateLength()
+total -= TotalMeetsMinimum() ? 5.00 : 0.00;
+
+Console.WriteLine($"Total: ${FormatDecimal(total)}");
+
+double GetDiscountedPrice(int itemIndex)
 {
-    validLength = address.Length == 4;
+    return items[itemIndex] * (1 - discounts[itemIndex]);
 }
 
-void ValidateZeroes()
+bool TotalMeetsMinimum()
 {
-    foreach (string number in address)
+    return total >= minimumSpend;
+}
+
+string FormatDecimal(double input)
+{
+    return input.ToString().Substring(0, 5);
+} */
+
+
+/* double usd = 23.73;
+int vnd = UsdToVnd(usd);
+
+Console.WriteLine($"${usd} USD = ₫{vnd} VND");
+Console.WriteLine($"₫{vnd} VND = ${VndToUsd(vnd)} USD");
+
+int UsdToVnd(double usd)
+{
+    int rate = 23500;
+
+    return (int)(rate * usd);
+}
+
+double VndToUsd(int vnd)
+{
+    double rate = 23500;
+    return vnd / rate;
+} */
+
+
+/* 
+// Exercise - return strings from methods
+string input = "snake";
+
+Console.WriteLine(input);
+Console.WriteLine(ReverseWord(input));
+
+input = "there are snakes at the zoo";
+
+Console.WriteLine(input);
+Console.WriteLine(ReverseSentence(input));
+
+string ReverseWord(string word)
+{
+    string result = "";
+
+    for (int i = word.Length - 1; i >= 0; i--)
     {
-        if (number.Length > 1 && number.StartsWith("0"))
+        result += word[i];
+    }
+
+    return result;
+}
+
+string ReverseSentence(string input)
+{
+    string result = "";
+    string[] words = input.Split(" ");
+
+    foreach (string word in words)
+    {
+        result += ReverseWord(word) + " ";
+    }
+
+    return result.Trim();
+} */
+
+/* 
+// Exercise - return booleans from methods
+
+string[] words = { "racecar", "talented", "deified", "tent", "tenet" };
+
+Console.WriteLine($"Is it a palindrome");
+
+foreach (string word in words)
+{
+    Console.WriteLine($"{word}: {IsPalindrome(word)}");
+}
+
+bool IsPalindrome(string word)
+{
+    int start = 0;
+    int end = word.Length - 1;
+
+    while (start < end)
+    {
+        if (word[start] != word[end])
         {
-            validZeroes = false;
-            return;
+            return false;
+        }
+        start++;
+        end--;
+    }
+
+    return true;
+} */
+
+/* 
+// Exercise - return array from methods
+int target = 80;
+int[] coins = new int[] { 5, 5, 50, 25, 25, 10, 5 };
+int[,] result = TwoCoins(coins, target);
+
+if (result.Length == 0)
+{
+    Console.WriteLine("No two coins make change");
+}
+else
+{
+    Console.WriteLine("Change found at position:");
+
+    for (int i = 0; i < result.GetLength(0); i++)
+    {
+        if (result[i, 0] == -1)
+        {
+            break;
+        }
+        Console.WriteLine($"{result[i, 0]} and {result[i, 1]}");
+    }
+}
+
+int[,] TwoCoins(int[] coins, int target)
+{
+    int[,] result = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
+    int count = 0;
+
+    for (int curr = 0; curr < coins.Length; curr++)
+    {
+        for (int next = curr + 1; next < coins.Length; next++)
+        {
+            if (coins[curr] + coins[next] == target)
+            {
+                result[count, 0] = curr;
+                result[count, 1] = next;
+                count++;
+            }
+
+            if (count == result.GetLength(0))
+            {
+                return result;
+            }
         }
     }
 
-    validZeroes = true;
-}
+    return (count == 0) ? new int[0, 0] : result;
+} */
 
-void ValidateRange()
+/* 
+// Challenge
+Random random = new Random();
+
+Console.WriteLine("Would you like to play? (Y/N)");
+if (ShouldPlay())
 {
-    foreach (string number in address)
-    {
-        int value = int.Parse(number);
-
-        if (value < 0 || value > 255)
-        {
-            validRange = false;
-            return;
-        }
-    }
-
-    validRange = true;
+    PlayGame();
 }
+
+void PlayGame()
+{
+    var play = true;
+
+    while (play)
+    {
+        var target = GetTarget();
+        var roll = RollDice();
+
+        Console.WriteLine($"Roll a number greater than {target} to win!");
+        Console.WriteLine($"You rolled a {roll}");
+        Console.WriteLine(WinOrLose(target, roll));
+        Console.WriteLine("\nPlay again? (Y/N)");
+
+        play = ShouldPlay();
+    }
+}
+
+string WinOrLose(int target, int roll)
+{
+    return roll > target ? "You win!" : "You lose!";
+}
+
+int GetTarget()
+{
+    return random.Next(1, 6);
+}
+
+int RollDice()
+{
+    return random.Next(1, 7);
+}
+
+bool ShouldPlay()
+{
+    bool inputCorrect = false;
+
+    do
+    {
+        string? input = Console.ReadLine();
+        string message = "Incorrect input! Would you like to play? (Y/N)";
+
+        if (input != null)
+        {
+            if (input.Trim().ToLower() == "n")
+            {
+                return false;
+            }
+            else if (input.Trim().ToLower() == "y")
+            {
+                return true;
+            }
+            else
+            {
+                inputCorrect = false;
+                Console.WriteLine(message);
+            }
+        }
+        else
+        {
+            inputCorrect = false;
+            Console.WriteLine(message);
+        }
+    } while (inputCorrect == false);
+
+    return false;
+} */
