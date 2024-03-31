@@ -1,245 +1,62 @@
-﻿/* double total = 0;
-double minimumSpend = 30.00;
-
-double[] items = { 15.97, 3.50, 12.25, 22.99, 10.98 };
-double[] discounts = { 0.30, 0.00, 0.10, 0.20, 0.50 };
-
-for (int i = 0; i < items.Length; i++)
+﻿string[] pettingZoo =
 {
-    total += GetDiscountedPrice(i);
+    "alpacas", "capybaras", "chickens", "ducks", "emus", "geese",
+    "goats", "iguanas", "kangaroos", "lemurs", "llamas", "macaws",
+    "ostriches", "pigs", "ponies", "rabbits", "sheep", "tortoises",
+};
+
+PlanSchoolVisit("School A");
+PlanSchoolVisit("School B", 3);
+PlanSchoolVisit("School C", 2);
+
+void PlanSchoolVisit(string schoolName, int groups = 6)
+{
+    RandomizeAnimals();
+
+    string[,] group = AssignGroup(groups);
+    Console.WriteLine(schoolName);
+    PrintGroup(group);
 }
 
-total -= TotalMeetsMinimum() ? 5.00 : 0.00;
-
-Console.WriteLine($"Total: ${FormatDecimal(total)}");
-
-double GetDiscountedPrice(int itemIndex)
+void RandomizeAnimals()
 {
-    return items[itemIndex] * (1 - discounts[itemIndex]);
-}
+    Random random = new Random();
 
-bool TotalMeetsMinimum()
-{
-    return total >= minimumSpend;
-}
-
-string FormatDecimal(double input)
-{
-    return input.ToString().Substring(0, 5);
-} */
-
-
-/* double usd = 23.73;
-int vnd = UsdToVnd(usd);
-
-Console.WriteLine($"${usd} USD = ₫{vnd} VND");
-Console.WriteLine($"₫{vnd} VND = ${VndToUsd(vnd)} USD");
-
-int UsdToVnd(double usd)
-{
-    int rate = 23500;
-
-    return (int)(rate * usd);
-}
-
-double VndToUsd(int vnd)
-{
-    double rate = 23500;
-    return vnd / rate;
-} */
-
-
-/* 
-// Exercise - return strings from methods
-string input = "snake";
-
-Console.WriteLine(input);
-Console.WriteLine(ReverseWord(input));
-
-input = "there are snakes at the zoo";
-
-Console.WriteLine(input);
-Console.WriteLine(ReverseSentence(input));
-
-string ReverseWord(string word)
-{
-    string result = "";
-
-    for (int i = word.Length - 1; i >= 0; i--)
+    for (int i = 0; i < pettingZoo.Length; i++)
     {
-        result += word[i];
+        int r = random.Next(i, pettingZoo.Length);
+
+        (pettingZoo[r], pettingZoo[i]) = (pettingZoo[i], pettingZoo[r]);
+    }
+}
+
+string[,] AssignGroup(int groups = 6)
+{
+    string[,] result = new string[groups, pettingZoo.Length / groups];
+    int start = 0;
+
+    for (int i = 0; i < groups; i++)
+    {
+        for (int j = 0; j < result.GetLength(1); j++)
+        {
+            result[i, j] = pettingZoo[start++];
+        }
     }
 
     return result;
 }
 
-string ReverseSentence(string input)
+void PrintGroup(string[,] group)
 {
-    string result = "";
-    string[] words = input.Split(" ");
-
-    foreach (string word in words)
+    for (int i = 0; i < group.GetLength(0); i++)
     {
-        result += ReverseWord(word) + " ";
-    }
+        Console.Write($"Group {i + 1}: ");
 
-    return result.Trim();
-} */
-
-/* 
-// Exercise - return booleans from methods
-
-string[] words = { "racecar", "talented", "deified", "tent", "tenet" };
-
-Console.WriteLine($"Is it a palindrome");
-
-foreach (string word in words)
-{
-    Console.WriteLine($"{word}: {IsPalindrome(word)}");
-}
-
-bool IsPalindrome(string word)
-{
-    int start = 0;
-    int end = word.Length - 1;
-
-    while (start < end)
-    {
-        if (word[start] != word[end])
+        for (int j = 0; j < group.GetLength(1); j++)
         {
-            return false;
+            Console.Write($"{group[i, j]}   ");
         }
-        start++;
-        end--;
-    }
 
-    return true;
-} */
-
-/* 
-// Exercise - return array from methods
-int target = 80;
-int[] coins = new int[] { 5, 5, 50, 25, 25, 10, 5 };
-int[,] result = TwoCoins(coins, target);
-
-if (result.Length == 0)
-{
-    Console.WriteLine("No two coins make change");
-}
-else
-{
-    Console.WriteLine("Change found at position:");
-
-    for (int i = 0; i < result.GetLength(0); i++)
-    {
-        if (result[i, 0] == -1)
-        {
-            break;
-        }
-        Console.WriteLine($"{result[i, 0]} and {result[i, 1]}");
+        Console.WriteLine();
     }
 }
-
-int[,] TwoCoins(int[] coins, int target)
-{
-    int[,] result = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
-    int count = 0;
-
-    for (int curr = 0; curr < coins.Length; curr++)
-    {
-        for (int next = curr + 1; next < coins.Length; next++)
-        {
-            if (coins[curr] + coins[next] == target)
-            {
-                result[count, 0] = curr;
-                result[count, 1] = next;
-                count++;
-            }
-
-            if (count == result.GetLength(0))
-            {
-                return result;
-            }
-        }
-    }
-
-    return (count == 0) ? new int[0, 0] : result;
-} */
-
-/* 
-// Challenge
-Random random = new Random();
-
-Console.WriteLine("Would you like to play? (Y/N)");
-if (ShouldPlay())
-{
-    PlayGame();
-}
-
-void PlayGame()
-{
-    var play = true;
-
-    while (play)
-    {
-        var target = GetTarget();
-        var roll = RollDice();
-
-        Console.WriteLine($"Roll a number greater than {target} to win!");
-        Console.WriteLine($"You rolled a {roll}");
-        Console.WriteLine(WinOrLose(target, roll));
-        Console.WriteLine("\nPlay again? (Y/N)");
-
-        play = ShouldPlay();
-    }
-}
-
-string WinOrLose(int target, int roll)
-{
-    return roll > target ? "You win!" : "You lose!";
-}
-
-int GetTarget()
-{
-    return random.Next(1, 6);
-}
-
-int RollDice()
-{
-    return random.Next(1, 7);
-}
-
-bool ShouldPlay()
-{
-    bool inputCorrect = false;
-
-    do
-    {
-        string? input = Console.ReadLine();
-        string message = "Incorrect input! Would you like to play? (Y/N)";
-
-        if (input != null)
-        {
-            if (input.Trim().ToLower() == "n")
-            {
-                return false;
-            }
-            else if (input.Trim().ToLower() == "y")
-            {
-                return true;
-            }
-            else
-            {
-                inputCorrect = false;
-                Console.WriteLine(message);
-            }
-        }
-        else
-        {
-            inputCorrect = false;
-            Console.WriteLine(message);
-        }
-    } while (inputCorrect == false);
-
-    return false;
-} */
